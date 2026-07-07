@@ -2,8 +2,8 @@ name: Feishu Literature Reminder
 
 on:
   schedule:
-    # 08:30 Beijing time = 00:30 UTC
-    - cron: "30 0 * * *"
+    # 08:00 Beijing time = 00:00 UTC
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 jobs:
@@ -18,7 +18,18 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Send Feishu literature reminder
+      - name: Install Python dependencies
+        run: pip install requests pyyaml pandas
+
+      - name: Search literature and send Feishu digest
         env:
           FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
         run: python scripts/feishu_literature_reminder.py
+
+      - name: Upload literature results
+        uses: actions/upload-artifact@v4
+        with:
+          name: literature-results
+          path: |
+            literature_results.md
+            literature_results.csv
