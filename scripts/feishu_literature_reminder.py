@@ -818,7 +818,12 @@ def send_to_feishu(webhook: str, text: str) -> bool:
             method="POST",
         )
         with urlopen(req, timeout=TIMEOUT) as response:
-            log(f"Feishu response: {response.read().decode('utf-8', errors='replace')}")
+            result = json.loads(response.read().decode("utf-8"))
+        code = int(result.get("code", result.get("StatusCode", -1)))
+        if code != 0:
+            warn(f"Feishu rejected message: code={code}")
+            return False
+        log("Feishu accepted message: code=0")
         return True
     except Exception as exc:  # noqa: BLE001
         warn(f"Feishu send failed: {exc}")
@@ -859,7 +864,10 @@ def main() -> int:
         log("Feishu delivery skipped for this local download run; cloud workflow handles delivery.")
     elif webhook:
         message = build_feishu_message(config, candidates, recommendations, dirs["date_package"])
-        log(f"Feishu sent: {send_to_feishu(webhook, message)}")
+        sent = send_to_feishu(webhook, message)
+        log(f"Feishu sent: {sent}")
+        if not sent:
+            return 1
     else:
         warn("FEISHU_WEBHOOK is not set; archive was generated but Feishu was not sent.")
 
