@@ -1,0 +1,124 @@
+research_profile:
+  field: "不同基因型外生菌根真菌调控马尾松干旱与复水恢复的碳—氮—水耦合机制"
+  organism: "Pinus massoniana"
+  symbionts:
+    - "ectomycorrhizal fungi (ECM)"
+    - "Cenococcum geophilum (Cg)"
+    - "Suillus (Sl)"
+  core_questions:
+    - "不同耐旱特征Cg菌株及Suillus处理如何改变马尾松干旱抗性和复水恢复"
+    - "ECM介导的氮获取、器官分配和叶片氮利用是否与Pn、WUE及NSC变化关联"
+    - "干旱和复水阶段碳供给、储存、向根与真菌的投入是否存在菌株特异性权衡"
+
+search:
+  candidate_pool_size: 30
+  final_selection_count: 5
+  lookback_days: 30
+  minimum_recommendation_score: 35
+  require_research_context: true
+  queries:
+    - "Pinus massoniana ectomycorrhizal nitrogen photosynthesis"
+    - "Cenococcum geophilum drought recovery"
+    - "Suillus drought carbon nitrogen"
+    - "ectomycorrhizal drought nitrogen uptake"
+    - "ectomycorrhizal carbon nitrogen exchange"
+    - "Pinus drought non-structural carbohydrates rewatering"
+    - "tree drought photosynthetic nitrogen use efficiency"
+    - "ectomycorrhizal carbon allocation isotope"
+    - "ectomycorrhizal ammonium nitrate transporter"
+    - "Pinus drought glutamine synthetase GOGAT"
+    - "conifer post-drought recovery carbon allocation"
+    - "Pinus massoniana nitrogen allocation Rubisco"
+  sources:
+    - openalex
+    - crossref
+    - semantic_scholar_optional
+    - arxiv_optional
+
+keywords:
+  include:
+    - "ectomycorrhizal fungi"
+    - "Cenococcum geophilum"
+    - "Pinus massoniana"
+    - "drought stress"
+    - "water use efficiency"
+    - "non-structural carbohydrates"
+    - "re-watering recovery"
+    - "Pinus drought rewatering"
+    - "Suillus drought stress"
+    - "ectomycorrhizal drought recovery"
+    - "WUE"
+    - "RWC"
+    - "NSC"
+    - "soluble sugar starch ratio"
+    - "nitrogen acquisition"
+    - "nitrogen allocation"
+    - "nitrogen assimilation"
+    - "photosynthetic nitrogen use efficiency"
+    - "PNUE"
+    - "Rubisco"
+    - "ammonium nitrate transporter"
+    - "GS GOGAT"
+    - "13C pulse labeling"
+    - "15N tracing"
+    - "carbon nitrogen water coupling"
+  chinese_include:
+    - "外生菌根真菌"
+    - "土生空团菌"
+    - "马尾松"
+    - "干旱胁迫"
+    - "水分利用效率"
+    - "非结构性碳水化合物"
+    - "复水恢复"
+    - "氮吸收与同化"
+    - "氮分配"
+    - "光合氮利用效率"
+    - "碳氮水耦合"
+  exclude:
+    - "arbuscular mycorrhizal fungi only"
+    - "crop irrigation only"
+    - "human microbiome"
+
+scoring:
+  topic_match: 35
+  methodological_value: 20
+  journal_source_quality: 15
+  research_network_relevance: 10
+  applied_engineering_value: 10
+  archival_value: 10
+  topic_gate_minimum: 10
+  priority_rules:
+    - "最优先ECM与马尾松或松属的干旱/复水及氮获取、氮分配、碳水耦合研究"
+    - "优先保留支持或反驳假设的证据，不预设接种必然有益或地下碳通量必然增加"
+    - "AMF和非木本材料的示踪研究只作为方法补充，不替代ECM直接证据"
+    - "优先选择ECM、Cg、Suillus、Pinus或针叶树干旱/复水研究"
+    - "优先选择同时包含光合气体交换、水分状态、NSC/碳代谢或复水恢复指标的论文"
+    - "马尾松、Cg、多菌株比较、干旱-复水全过程研究可提高Topic Match评分"
+
+delivery:
+  target_name: "飞书群：每日文献"
+  target: "FEISHU_WEBHOOK"
+  status: "active"
+  format: "short_digest"
+  note: "本机通过 Windows 用户环境变量 FEISHU_WEBHOOK 推送；GitHub Actions 通过 Repository Secret FEISHU_WEBHOOK 推送。"
+
+archive:
+  enabled: true
+  root: "C:/r/核心文献下载"
+  raw_notes: "C:/r/核心文献下载/raw/notes"
+  pdf_dir: "C:/r/核心文献下载/raw/pdf"
+  index_dir: "C:/r/核心文献下载/index"
+  write_wiki: false
+  dedup_keys:
+    - doi
+    - arxiv_id
+    - openalex_id
+    - normalized_title
+
+schedule:
+  status: "created"
+  timezone: "Asia/Shanghai"
+  time: "08:30"
+  task_name: "Feishu Daily Literature"
+  note: "本机 Windows 计划任务每日北京时间 08:30 运行；GitHub Actions 使用 00:30 UTC。"
+
