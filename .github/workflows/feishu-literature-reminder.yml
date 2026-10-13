@@ -2,13 +2,14 @@ name: Feishu Literature Reminder
 
 on:
   schedule:
-    # 08:00 Beijing time = 00:00 UTC
-    - cron: "0 0 * * *"
+    # 08:30 Beijing time = 00:30 UTC
+    - cron: "30 0 * * *"
   workflow_dispatch:
 
 jobs:
   remind:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -24,12 +25,17 @@ jobs:
       - name: Search literature and send Feishu digest
         env:
           FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+          LITERATURE_ARCHIVE_ROOT: literature_archive
+          LITERATURE_CONFIG: literature_pipeline_config.yaml
         run: python scripts/feishu_literature_reminder.py
 
       - name: Upload literature results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: literature-results
           path: |
             literature_results.md
             literature_results.csv
+            literature_archive/**
+
